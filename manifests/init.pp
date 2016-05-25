@@ -203,7 +203,7 @@
 #   
 #   class { 'congress::db::mysql':
 #       password => 'password',
-#       host => '192.168.122.6',
+#       host => '%',
 #   } 
 #   
 #   class { 'congress::keystone::auth':
@@ -267,7 +267,7 @@ class congress(
   $service_name                       = $::congress::params::service_name,
 ) inherits congress::params {
   congress_config {
-    'DEFAULT/drivers'         : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources. keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
+    'DEFAULT/drivers'         : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources.keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
   }
 
   if $identity_uri {
@@ -291,8 +291,8 @@ class congress(
     }
   }
 
-  congress_config<||> ~> Service[$service_name]
-  congress_config<||> ~> Exec<| title == 'congress-manage db_sync'|>
+  Congress_config<||> ~> Service[$service_name]
+  Congress_config<||> ~> Exec<| title == 'congress-manage db_sync'|>
 
   include ::congress::db
   include ::congress::params
