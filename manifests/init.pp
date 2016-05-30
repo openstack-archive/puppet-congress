@@ -267,7 +267,10 @@ class congress(
   $service_name                       = $::congress::params::service_name,
 ) inherits congress::params {
   congress_config {
-    'DEFAULT/drivers'         : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources.keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
+    'DEFAULT/drivers'     : value => 'congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver,congress.datasources.nova_driver.NovaDriver,congress.datasources.keystone_driver.KeystoneDriver,congress.datasources.ceilometer_driver.CeilometerDriver,congress.datasources.cinder_driver.CinderDriver';
+    'DEFAULT/policy_path' : value => '/etc/congress/snapshot/';
+    'DEFAULT/log_file'    : value => 'congress.log';
+    'DEFAULT/log_dir'     : value => '/var/log/congress/';
   }
 
   if $identity_uri {

@@ -59,7 +59,7 @@ class congress::keystone::auth (
   $configure_user      = true,
   $configure_user_role = true,
   $service_name        = undef,
-  $service_type        = 'servicevm',
+  $service_type        = 'policy',
   $admin_url           = 'http://127.0.0.1:1789',
   $internal_url        = 'http://127.0.0.1:1789',
   $public_url          = 'http://127.0.0.1:1789',
