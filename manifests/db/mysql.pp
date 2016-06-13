@@ -1,7 +1,7 @@
 # The congress::db::mysql class implements mysql backend for congress
 #
 # This class can be used to create tables, users and grant
-# privelege for a mysql congress database.
+# privilege for a mysql congress database.
 #
 # == parameters
 #

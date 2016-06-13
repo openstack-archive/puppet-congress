@@ -26,9 +26,9 @@ describe 'congress::logging' do
      :log_date_format => '%Y-%m-%d %H:%M:%S',
      :use_syslog => true,
      :use_stderr => false,
-     :log_facility => 'LOG_FOO',
+     :syslog_log_facility => 'LOG_FOO',
      :log_dir => '/var/log',
-     :verbose => true,
+     :log_file => '/var/log/congress.log',
      :debug => true,
     }
   end
@@ -56,24 +56,24 @@ describe 'congress::logging' do
   end
 
   shared_examples 'basic default logging settings' do
-    it 'configures ceilometer logging settins with default values' do
-      is_expected.to contain_ceilometer_config('DEFAULT/use_syslog').with(:value => 'false')
-      is_expected.to contain_ceilometer_config('DEFAULT/use_stderr').with(:value => 'true')
-      is_expected.to contain_ceilometer_config('DEFAULT/syslog_log_facility').with(:value => 'LOG_USER')
-      is_expected.to contain_ceilometer_config('DEFAULT/log_dir').with(:value => '/var/log/congress')
-      is_expected.to contain_ceilometer_config('DEFAULT/verbose').with(:value => 'false')
-      is_expected.to contain_ceilometer_config('DEFAULT/debug').with(:value => 'false')
+    it 'configures congress logging settins with default values' do
+      is_expected.to contain_congress_config('DEFAULT/use_syslog').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_congress_config('DEFAULT/use_stderr').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_congress_config('DEFAULT/syslog_log_facility').with(:value => '<SERVICE DEFAULT>')
+      is_expected.to contain_congress_config('DEFAULT/log_dir').with(:value => '/var/log/congress')
+      is_expected.to contain_congress_config('DEFAULT/log_file').with(:value => '/var/log/congress/congress.log')
+      is_expected.to contain_congress_config('DEFAULT/debug').with(:value => '<SERVICE DEFAULT>')
     end
   end
 
   shared_examples 'basic non-default logging settings' do
-    it 'configures ceilometer logging settins with non-default values' do
-      is_expected.to contain_ceilometer_config('DEFAULT/use_syslog').with(:value => 'true')
-      is_expected.to contain_ceilometer_config('DEFAULT/use_stderr').with(:value => 'false')
-      is_expected.to contain_ceilometer_config('DEFAULT/syslog_log_facility').with(:value => 'LOG_FOO')
-      is_expected.to contain_ceilometer_config('DEFAULT/log_dir').with(:value => '/var/log')
-      is_expected.to contain_ceilometer_config('DEFAULT/verbose').with(:value => 'true')
-      is_expected.to contain_ceilometer_config('DEFAULT/debug').with(:value => 'true')
+    it 'configures congress logging settins with non-default values' do
+      is_expected.to contain_congress_config('DEFAULT/use_syslog').with(:value => 'true')
+      is_expected.to contain_congress_config('DEFAULT/use_stderr').with(:value => 'false')
+      is_expected.to contain_congress_config('DEFAULT/syslog_log_facility').with(:value => 'LOG_FOO')
+      is_expected.to contain_congress_config('DEFAULT/log_dir').with(:value => '/var/log')
+      is_expected.to contain_congress_config('DEFAULT/log_file').with(:value => '/var/log/congress.log')
+      is_expected.to contain_congress_config('DEFAULT/debug').with(:value => 'true')
     end
   end
 
@@ -121,24 +121,19 @@ describe 'congress::logging' do
      :default_log_levels, :fatal_deprecations,
      :instance_format, :instance_uuid_format,
      :log_date_format, ].each { |param|
-        it { is_expected.to contain_congress_config("DEFAULT/#{param}").with_ensure('absent') }
+        it { is_expected.to contain_congress_config("DEFAULT/#{param}").with_value('<SERVICE DEFAULT>') }
       }
   end
 
-  context 'on Debian platforms' do
-    let :facts do
-      { :osfamily => 'Debian' }
+  on_supported_os({
+    :supported_os => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts())
+      end
+
+      it_behaves_like 'congress-logging'
     end
-
-    it_configures 'congress-logging'
   end
-
-  context 'on RedHat platforms' do
-    let :facts do
-      { :osfamily => 'RedHat' }
-    end
-
-    it_configures 'congress-logging'
-  end
-
 end

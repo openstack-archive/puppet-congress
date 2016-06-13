@@ -30,7 +30,7 @@ provider_class = Puppet::Type.type(:congress_config).provider(:ini_setting)
 describe provider_class do
 
   it 'should default to the default setting when no other one is specified' do
-    resource = Puppet::Type::congress_config.new(
+    resource = Puppet::Type::Congress_config.new(
       {:name => 'DEFAULT/foo', :value => 'bar'}
     )
     provider = provider_class.new(resource)
@@ -39,7 +39,7 @@ describe provider_class do
   end
 
   it 'should allow setting to be set explicitly' do
-    resource = Puppet::Type::congress_config.new(
+    resource = Puppet::Type::Congress_config.new(
       {:name => 'dude/foo', :value => 'bar'}
     )
     provider = provider_class.new(resource)
@@ -48,7 +48,7 @@ describe provider_class do
   end
 
   it 'should ensure absent when <SERVICE DEFAULT> is specified as a value' do
-    resource = Puppet::Type::congress_config.new(
+    resource = Puppet::Type::Congress_config.new(
       {:name => 'dude/foo', :value => '<SERVICE DEFAULT>'}
     )
     provider = provider_class.new(resource)
@@ -57,7 +57,7 @@ describe provider_class do
   end
 
   it 'should ensure absent when value matches ensure_absent_val' do
-    resource = Puppet::Type::congress_config.new(
+    resource = Puppet::Type::Congress_config.new(
       {:name => 'dude/foo', :value => 'foo', :ensure_absent_val => 'foo' }
     )
     provider = provider_class.new(resource)

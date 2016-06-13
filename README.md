@@ -14,7 +14,7 @@ congress
 Overview
 --------
 
-The congress module is a part of [OpenStack](https://github.com/openstack), an effort by the Openstack infrastructure team to provide continuous integration testing and code review for Openstack and Openstack community projects not part of the core software.  The module its self is used to flexibly configure and manage the FIXME service for Openstack.
+The congress module is a part of [OpenStack](https://www.openstack.org), an effort by the OpenStack infrastructure team to provide continuous integration testing and code review for OpenStack and OpenStack community projects not part of the core software.  The module its self is used to flexibly configure and manage the policy service for OpenStack.
 
 Module Description
 ------------------
@@ -26,7 +26,7 @@ Setup
 
 **What the congress module affects**
 
-* [congress](https://wiki.openstack.org/wiki/congress), the FIXME service for Openstack.
+* [Congress](https://wiki.openstack.org/wiki/Congress), the policy service for OpenStack.
 
 ### Installing congress
 
@@ -35,7 +35,7 @@ Setup
 
 ### Beginning with congress
 
-To utilize the congress module's functionality you will need to declare multiple resources.  The following is a modified excerpt from the [openstack module](https://github.com/stackfoge/puppet-openstack).  This is not an exhaustive list of all the components needed, we recommend you consult and understand the [openstack module](https://github.com/stackforge/puppet-openstack) and the [core openstack](http://docs.openstack.org) documentation.
+To utilize the congress module's functionality you will need to declare multiple resources.
 
 Implementation
 --------------
@@ -63,14 +63,14 @@ bundle exec rake acceptance
 
 For more information on writing and running beaker-rspec tests visit the documentation:
 
-* https://github.com/puppetlabs/beaker/wiki/How-to-Write-a-Beaker-Test-for-a-Module
+* https://github.com/puppetlabs/beaker-rspec/blob/master/README.md
 
 Development
 -----------
 
 Developer documentation for the entire puppet-openstack project.
 
-* https://wiki.openstack.org/wiki/Puppet
+* http://docs.openstack.org/developer/puppet-openstack-guide/
 
 Contributors
 ------------
