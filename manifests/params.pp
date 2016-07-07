@@ -1,6 +1,7 @@
 # Parameters for puppet-congress
 #
 class congress::params {
+  include ::openstacklib::defaults
 
   case $::osfamily {
     'RedHat': {
