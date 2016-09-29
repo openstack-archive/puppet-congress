@@ -16,6 +16,8 @@ class congress::db::sync(
     path        => '/usr/bin',
     user        => 'congress',
     refreshonly => true,
+    try_sleep   => 5,
+    tries       => 10,
     subscribe   => [Package['congress'], Congress_config['database/connection']],
   }
 
