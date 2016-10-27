@@ -19,6 +19,7 @@ describe 'congress::policy' do
         :key   => 'context_is_admin',
         :value => 'foo:bar'
       })
+      is_expected.to contain_congress_config('oslo_policy/policy_file').with_value('/etc/congress/policy.json')
     end
   end
 
