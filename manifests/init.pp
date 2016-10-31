@@ -9,29 +9,9 @@
 #   (Optional) Use these options to configure the RabbitMQ message system.
 #   Defaults to 'rabbit'
 #
-# [*rabbit_host*]
-#   (Optional) IP or hostname of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_port*]
-#   (Optional) Port of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_hosts*]
-#   (Optional) Array of host:port (used with HA queues).
-#   If defined, will remove rabbit_host & rabbit_port parameters from config
-#   Defaults to $::os_service_default
-#
-# [*rabbit_userid*]
-#   (Optional) User to connect to the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_password*]
-#   (Required) Password to connect to the rabbit_server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_virtual_host*]
-#   (Optional) Virtual_host to use.
+# [*default_transport_url*]
+#   (optional) Connection url for oslo messaging backend. An example rabbit url
+#   would be, rabbit://user:pass@host:port/virtual_host
 #   Defaults to $::os_service_default
 #
 # [*rabbit_heartbeat_timeout_threshold*]
@@ -166,6 +146,33 @@
 #   (Optional) Run db sync on the node.
 #   Defaults to true
 #
+# === DEPRECATED PARAMETERS
+#
+# [*rabbit_host*]
+#   (Optional) IP or hostname of the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_port*]
+#   (Optional) Port of the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_hosts*]
+#   (Optional) Array of host:port (used with HA queues).
+#   If defined, will remove rabbit_host & rabbit_port parameters from config
+#   Defaults to $::os_service_default
+#
+# [*rabbit_userid*]
+#   (Optional) User to connect to the rabbit server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_password*]
+#   (Required) Password to connect to the rabbit_server.
+#   Defaults to $::os_service_default
+#
+# [*rabbit_virtual_host*]
+#   (Optional) Virtual_host to use.
+#   Defaults to $::os_service_default
+#
 # == Authors
 #
 #   Dan Radez <dradez@redhat.com>
@@ -176,14 +183,9 @@
 #
 class congress(
   $rpc_backend                        = 'rabbit',
-  $rabbit_host                        = $::os_service_default,
-  $rabbit_port                        = $::os_service_default,
-  $rabbit_hosts                       = $::os_service_default,
-  $rabbit_virtual_host                = $::os_service_default,
+  $default_transport_url              = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
-  $rabbit_userid                      = $::os_service_default,
-  $rabbit_password                    = $::os_service_default,
   $rabbit_use_ssl                     = $::os_service_default,
   $rabbit_ha_queues                   = $::os_service_default,
   $kombu_ssl_ca_certs                 = $::os_service_default,
@@ -212,9 +214,27 @@ class congress(
   $drivers                            = $::congress::params::drivers,
   $policy_path                        = $::congress::params::policy_path,
   $sync_db                            = true,
+  # DEPRECATED PARAMETERS
+  $rabbit_host                        = $::os_service_default,
+  $rabbit_port                        = $::os_service_default,
+  $rabbit_hosts                       = $::os_service_default,
+  $rabbit_virtual_host                = $::os_service_default,
+  $rabbit_userid                      = $::os_service_default,
+  $rabbit_password                    = $::os_service_default,
 ) inherits congress::params {
 
   include ::congress::logging
+
+  if !is_service_default($rabbit_host) or
+    !is_service_default($rabbit_hosts) or
+    !is_service_default($rabbit_password) or
+    !is_service_default($rabbit_port) or
+    !is_service_default($rabbit_userid) or
+    !is_service_default($rabbit_virtual_host) {
+    warning("congress::rabbit_host, congress::rabbit_hosts, congress::rabbit_password, \
+congress::rabbit_port, congress::rabbit_userid and congress::rabbit_virtual_host are \
+deprecated. Please use congress::default_transport_url instead.")
+  }
 
   congress_config {
     'DEFAULT/drivers'     : value => join(any2array($drivers), ',');
@@ -266,6 +286,10 @@ class congress(
     }
   } else {
     congress_config { 'DEFAULT/rpc_backend': value => $rpc_backend }
+  }
+
+  oslo::messaging::default { 'congress_config':
+    transport_url => $default_transport_url,
   }
 
 }
