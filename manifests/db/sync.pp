@@ -12,14 +12,13 @@ class congress::db::sync(
   $extra_params  = undef,
 ) {
   exec { 'congress-db-sync':
-    command     => "congress-manage db_sync ${extra_params}",
-    path        => '/usr/bin',
+    command     => "congress-db-manage upgrade head ${extra_params}",
+    path        => ['/bin', '/usr/bin'],
     user        => 'congress',
     refreshonly => true,
-    try_sleep   => 5,
-    tries       => 10,
-    subscribe   => [Package['congress'], Congress_config['database/connection']],
+    logoutput   => 'on_failure',
+    subscribe   => [Package['congress']],
   }
 
-  Exec['congress-manage db_sync'] ~> Service<| title == 'congress' |>
+  Exec['congress-db-sync'] ~> Service<| title == 'congress' |>
 }

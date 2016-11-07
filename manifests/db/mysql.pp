@@ -65,5 +65,5 @@ class congress::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['congress'] ~> Exec<| title == 'congress-manage db_sync' |>
+  ::Openstacklib::Db::Mysql['congress'] ~> Exec<| title == 'congress-db-sync' |>
 }
