@@ -94,6 +94,19 @@ describe 'congress' do
       end
     end
 
+    context 'with default_transport_url parameter' do
+      let :params do
+        { :default_transport_url => 'rabbit://user:pass@host:1234/virtualhost' }
+      end
+
+      it 'configures rabbit' do
+        is_expected.to contain_oslo__messaging__default('congress_config').with(
+          :transport_url => 'rabbit://user:pass@host:1234/virtualhost'
+        )
+      end
+    end
+
+
     context 'with kombu_reconnect_delay set to 5.0' do
       let :params do
         {
