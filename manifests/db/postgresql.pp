@@ -50,6 +50,6 @@ class congress::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['congress'] ~> Exec<| title == 'congress-manage db_sync' |>
+  ::Openstacklib::Db::Postgresql['congress'] ~> Exec<| title == 'congress-db-sync' |>
 
 }
