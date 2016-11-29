@@ -12,8 +12,15 @@ describe 'congress' do
       end
 
       it 'contains the logging class' do
+        is_expected.to contain_class('congress::deps')
         is_expected.to contain_class('congress::logging')
       end
+
+      it { is_expected.to contain_package('congress-common').with(
+        :ensure => 'present',
+        :name   => platform_params[:congress_package],
+        :tag    => ['openstack', 'congress-package']
+      )}
 
       it 'configures rabbit' do
         is_expected.to contain_congress_config('DEFAULT/rpc_backend').with_value('rabbit')
@@ -268,7 +275,7 @@ describe 'congress' do
       let(:platform_params) do
         case facts[:osfamily]
         when 'Debian'
-          { :congress_package => 'congress' }
+          { :congress_package => 'congress-server' }
         when 'RedHat'
           { :congress_package => 'openstack-congress' }
         end

@@ -24,6 +24,8 @@ class congress::config (
   $congress_config = {},
 ) {
 
+  include ::congress::deps
+
   validate_hash($congress_config)
 
   create_resources('congress_config', $congress_config)

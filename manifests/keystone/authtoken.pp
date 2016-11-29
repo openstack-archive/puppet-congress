@@ -222,6 +222,8 @@ class congress::keystone::authtoken(
   $token_cache_time               = $::os_service_default,
 ) {
 
+  include ::congress::deps
+
   keystone::resource::authtoken { 'congress_config':
     username                       => $username,
     password                       => $password,

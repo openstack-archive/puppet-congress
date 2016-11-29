@@ -10,6 +10,7 @@ class congress::client (
   $ensure = 'present'
 ) {
 
+  include ::congress::deps
   include ::congress::params
 
   package { 'python-congressclient':

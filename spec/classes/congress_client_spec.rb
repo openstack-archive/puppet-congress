@@ -6,12 +6,13 @@ describe 'congress::client' do
 
     context 'with default parameters' do
       it 'contains congress::params' do
+          is_expected.to contain_class('congress::deps')
           is_expected.to contain_class('congress::params')
       end
       it 'contains congressclient' do
           is_expected.to contain_package('python-congressclient').with(
               :ensure => 'present',
-              :name   => platform_params[:congressclient_package]
+              :name   => 'python-congressclient',
           )
       end
     end
@@ -26,16 +27,7 @@ describe 'congress::client' do
         facts.merge!(OSDefaults.get_facts())
       end
 
-      let(:platform_params) do
-        case facts[:osfamily]
-        when 'Debian'
-          { :congressclient_package => 'congressclient' }
-        when 'RedHat'
-          { :congressclient_package => 'python-congressclient' }
-        end
-      end
       it_behaves_like 'congress::client'
-
     end
   end
 

@@ -49,6 +49,8 @@ class congress::db (
   $database_max_overflow   = $::os_service_default,
 ) {
 
+  include ::congress::deps
+
   validate_re($database_connection,
     '^(sqlite|mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
 

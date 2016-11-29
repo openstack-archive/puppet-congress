@@ -28,6 +28,8 @@ class congress::policy (
   $policy_path = '/etc/congress/policy.json',
 ) {
 
+  include ::congress::deps
+
   validate_hash($policies)
 
   Openstacklib::Policy::Base {

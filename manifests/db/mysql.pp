@@ -53,6 +53,8 @@ class congress::db::mysql(
   $allowed_hosts = undef
 ) {
 
+  include ::congress::deps
+
   validate_string($password)
 
   ::openstacklib::db::mysql { 'congress':
@@ -65,5 +67,8 @@ class congress::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['congress'] ~> Exec<| title == 'congress-db-sync' |>
+  Anchor['congress::db::begin']
+  ~> Class['congress::db::mysql']
+  ~> Anchor['congress::db::end']
+
 }

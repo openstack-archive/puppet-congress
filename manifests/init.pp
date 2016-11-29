@@ -173,6 +173,14 @@
 #   (Optional) Virtual_host to use.
 #   Defaults to $::os_service_default
 #
+# [*package_name*]
+#   (Optional) Package name to install for congress.
+#   Defaults to $::congress::params::package_name
+#
+# [*package_ensure*]
+#   (Optional) Ensure state for package.
+#   Defaults to present.
+#
 # == Authors
 #
 #   Dan Radez <dradez@redhat.com>
@@ -214,6 +222,8 @@ class congress(
   $drivers                            = $::congress::params::drivers,
   $policy_path                        = $::congress::params::policy_path,
   $sync_db                            = true,
+  $package_name                       = $::congress::params::package_name,
+  $package_ensure                     = 'present',
   # DEPRECATED PARAMETERS
   $rabbit_host                        = $::os_service_default,
   $rabbit_port                        = $::os_service_default,
@@ -223,6 +233,7 @@ class congress(
   $rabbit_password                    = $::os_service_default,
 ) inherits congress::params {
 
+  include ::congress::deps
   include ::congress::logging
 
   if !is_service_default($rabbit_host) or
@@ -234,6 +245,12 @@ class congress(
     warning("congress::rabbit_host, congress::rabbit_hosts, congress::rabbit_password, \
 congress::rabbit_port, congress::rabbit_userid and congress::rabbit_virtual_host are \
 deprecated. Please use congress::default_transport_url instead.")
+  }
+
+  package { 'congress-common':
+    ensure => $package_ensure,
+    name   => $package_name,
+    tag    => ['openstack', 'congress-package'],
   }
 
   congress_config {

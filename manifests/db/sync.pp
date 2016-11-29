@@ -3,22 +3,28 @@
 #
 # == Parameters
 #
-# [*extra_params*]
-#   (optional) String of extra command line parameters to append
-#   to the congress-dbsync command.
-#   Defaults to undef
+# [*user*]
+#   (optional) User to run dbsync command.
+#   Defaults to 'congress'
 #
 class congress::db::sync(
-  $extra_params  = undef,
+  $user = 'congress',
 ) {
+
+  include ::congress::deps
+
   exec { 'congress-db-sync':
-    command     => "congress-db-manage upgrade head ${extra_params}",
+    command     => 'congress-db-manage --config-file /etc/congress/congress.conf upgrade head',
     path        => ['/bin', '/usr/bin'],
-    user        => 'congress',
+    user        => $user,
     refreshonly => true,
     logoutput   => 'on_failure',
-    subscribe   => [Package['congress']],
+    subscribe   => [
+      Anchor['congress::install::end'],
+      Anchor['congress::config::end'],
+      Anchor['congress::dbsync::begin']
+    ],
+    notify      => Anchor['congress::dbsync::end'],
   }
 
-  Exec['congress-db-sync'] ~> Service<| title == 'congress' |>
 }

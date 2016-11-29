@@ -6,11 +6,15 @@ describe 'congress::db::sync' do
 
     it 'runs congress-db-sync' do
       is_expected.to contain_exec('congress-db-sync').with(
-        :command     => 'congress-db-manage upgrade head ',
+        :command     => 'congress-db-manage --config-file /etc/congress/congress.conf upgrade head',
         :path        => ["/bin", "/usr/bin"],
         :refreshonly => true,
         :user        => 'congress',
-        :logoutput   => 'on_failure'
+        :logoutput   => 'on_failure',
+        :subscribe   => ['Anchor[congress::install::end]',
+                         'Anchor[congress::config::end]',
+                         'Anchor[congress::dbsync::begin]'],
+        :notify      => 'Anchor[congress::dbsync::end]',
       )
     end
 

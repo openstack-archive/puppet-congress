@@ -40,7 +40,7 @@ class congress::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  Class['congress::db::postgresql'] -> Service<| title == 'congress' |>
+  include ::congress::deps
 
   ::openstacklib::db::postgresql { 'congress':
     password_hash => postgresql_password($user, $password),
@@ -50,6 +50,8 @@ class congress::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['congress'] ~> Exec<| title == 'congress-db-sync' |>
+  Anchor['congress::db::begin']
+  ~> Class['congress::db::postgresql']
+  ~> Anchor['congress::db::end']
 
 }

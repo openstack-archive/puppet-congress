@@ -69,10 +69,15 @@ class congress::keystone::auth (
   $internal_url        = 'http://127.0.0.1:1789',
 ) {
 
+  include ::congress::deps
+
   if $configure_user_role {
-    Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'congress-server' |>
+    Keystone_user_role["${auth_name}@${tenant}"] ~> Anchor['congress::service::end']
   }
-  Keystone_endpoint["${region}/${service_name}::${service_type}"]  ~> Service <| name == 'congress-server' |>
+
+  if $configure_endpoint {
+    Keystone_endpoint["${region}/${service_name}::${service_type}"]  ~> Anchor['congress::service::end']
+  }
 
   keystone::resource::service_identity { 'congress':
     configure_user      => $configure_user,
