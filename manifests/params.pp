@@ -10,7 +10,6 @@ class congress::params {
                           'congress.datasources.keystone_driver.KeystoneDriver',
                           'congress.datasources.ceilometer_driver.CeilometerDriver',
                           'congress.datasources.cinder_driver.CinderDriver']
-  $policy_path         = '/etc/congress/snapshot/'
   $client_package_name = 'python-congressclient'
 
   case $::osfamily {

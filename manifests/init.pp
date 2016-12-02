@@ -138,10 +138,6 @@
 #   (optional) Comma delimited list of drivers for congress.
 #   Defaults to '$::congress::params::drivers'
 #
-# [*policy_path*]
-#   (optional) Directory that congress with use for policy storage.
-#   Defaults to '$::congress::params::policy_path'
-#
 # [*sync_db*]
 #   (Optional) Run db sync on the node.
 #   Defaults to true
@@ -220,7 +216,6 @@ class congress(
   $amqp_username                      = $::os_service_default,
   $amqp_password                      = $::os_service_default,
   $drivers                            = $::congress::params::drivers,
-  $policy_path                        = $::congress::params::policy_path,
   $sync_db                            = true,
   $package_name                       = $::congress::params::package_name,
   $package_ensure                     = 'present',
@@ -254,8 +249,7 @@ deprecated. Please use congress::default_transport_url instead.")
   }
 
   congress_config {
-    'DEFAULT/drivers'     : value => join(any2array($drivers), ',');
-    'DEFAULT/policy_path' : value => $policy_path;
+    'DEFAULT/drivers' : value => join(any2array($drivers), ',');
   }
 
   if $sync_db {
