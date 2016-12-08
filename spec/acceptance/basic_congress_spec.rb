@@ -53,6 +53,9 @@ describe 'basic congress' do
           class { '::congress::server': }
           class { '::congress::client': }
         }
+        default: {
+          fail("Unsupported osfamily (${::osfamily})")
+        }
       }
       EOS
 
