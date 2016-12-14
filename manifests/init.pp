@@ -14,6 +14,11 @@
 #   would be, rabbit://user:pass@host:port/virtual_host
 #   Defaults to $::os_service_default
 #
+# [*notification_transport_url*]
+#   (optional) Connection url for oslo messaging notification backend. An
+#   example rabbit url would be, rabbit://user:pass@host:port/virtual_host
+#   Defaults to $::os_service_default
+#
 # [*rabbit_heartbeat_timeout_threshold*]
 #   (optional) Number of seconds after which the RabbitMQ broker is considered
 #   down if the heartbeat keepalive fails.  Any value >0 enables heartbeats.
@@ -188,6 +193,7 @@
 class congress(
   $rpc_backend                        = 'rabbit',
   $default_transport_url              = $::os_service_default,
+  $notification_transport_url         = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
   $rabbit_use_ssl                     = $::os_service_default,
@@ -303,4 +309,7 @@ deprecated. Please use congress::default_transport_url instead.")
     transport_url => $default_transport_url,
   }
 
+  oslo::messaging::notifications { 'congress_config':
+    transport_url => $notification_transport_url,
+  }
 }
