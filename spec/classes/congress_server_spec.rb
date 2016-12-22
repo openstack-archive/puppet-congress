@@ -37,7 +37,7 @@ describe 'congress::server' do
         it 'configures congress-server service' do
           is_expected.to contain_service('congress-server').with(
             :ensure => (params[:manage_service] && params[:enabled]) ? 'running' : 'stopped',
-            :name   => 'congress-server',
+            :name   => platform_params[:congress_service],
             :enable => params[:enabled],
             :tag    => 'congress-service',
           )
@@ -53,6 +53,15 @@ describe 'congress::server' do
     context "on #{os}" do
       let (:facts) do
         facts.merge!(OSDefaults.get_facts())
+      end
+
+      let(:platform_params) do
+        case facts[:osfamily]
+        when 'Debian'
+          { :congress_service => 'congress-server' }
+        when 'RedHat'
+          { :congress_service => 'openstack-congress' }
+        end
       end
 
       it_configures 'congress::server'
