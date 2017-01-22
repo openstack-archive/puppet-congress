@@ -24,6 +24,10 @@ class congress::deps {
   ~> Service<| tag == 'congress-service' |>
   ~> anchor { 'congress::service::end': }
 
+  # all db settings should be applied and all packages should be installed
+  # before dbsync starts
+  Oslo::Db<||> -> Anchor['congress::dbsync::begin']
+
   # policy config should occur in the config block also.
   Anchor['congress::config::begin']
   -> Openstacklib::Policy::Base<||>
