@@ -14,6 +14,16 @@
 #   would be, rabbit://user:pass@host:port/virtual_host
 #   Defaults to $::os_service_default
 #
+# [*rpc_response_timeout*]
+#  (Optional) Seconds to wait for a response from a call.
+#  Defaults to $::os_service_default
+#
+# [*control_exchange*]
+#   (Optional) The default exchange under which topics are scoped. May be
+#   overridden by an exchange name specified in the transport_url
+#   option.
+#   Defaults to $::os_service_default
+#
 # [*notification_transport_url*]
 #   (optional) Connection url for oslo messaging notification backend. An
 #   example rabbit url would be, rabbit://user:pass@host:port/virtual_host
@@ -193,6 +203,8 @@
 class congress(
   $rpc_backend                        = 'rabbit',
   $default_transport_url              = $::os_service_default,
+  $rpc_response_timeout               = $::os_service_default,
+  $control_exchange                   = $::os_service_default,
   $notification_transport_url         = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
@@ -306,7 +318,9 @@ deprecated. Please use congress::default_transport_url instead.")
   }
 
   oslo::messaging::default { 'congress_config':
-    transport_url => $default_transport_url,
+    transport_url        => $default_transport_url,
+    rpc_response_timeout => $rpc_response_timeout,
+    control_exchange     => $control_exchange,
   }
 
   oslo::messaging::notifications { 'congress_config':

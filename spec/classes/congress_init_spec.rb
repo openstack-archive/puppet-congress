@@ -24,6 +24,9 @@ describe 'congress' do
 
       it 'configures rabbit' do
         is_expected.to contain_congress_config('DEFAULT/rpc_backend').with_value('rabbit')
+        is_expected.to contain_congress_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_password').with_value('<SERVICE DEFAULT>').with_secret(true)
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
@@ -34,7 +37,6 @@ describe 'congress' do
         is_expected.to contain_congress_config('oslo_messaging_rabbit/kombu_compression').with_value('<SERVICE DEFAULT>')
       end
 
-      it { is_expected.to contain_oslo__messaging__default('congress_config').with(:transport_url => '<SERVICE DEFAULT>') }
       it { is_expected.to contain_oslo__messaging__notifications('congress_config').with(:transport_url => '<SERVICE DEFAULT>') }
     end
 
@@ -105,13 +107,17 @@ describe 'congress' do
 
     context 'with default_transport_url parameter' do
       let :params do
-        { :default_transport_url => 'rabbit://user:pass@host:1234/virtualhost' }
+        { 
+          :default_transport_url => 'rabbit://user:pass@host:1234/virtualhost', 
+          :rpc_response_timeout  => '120',
+          :control_exchange      => 'congress',
+        }
       end
 
       it 'configures rabbit' do
-        is_expected.to contain_oslo__messaging__default('congress_config').with(
-          :transport_url => 'rabbit://user:pass@host:1234/virtualhost'
-        )
+        is_expected.to contain_congress_config('DEFAULT/transport_url').with_value('rabbit://user:pass@host:1234/virtualhost')
+        is_expected.to contain_congress_config('DEFAULT/rpc_response_timeout').with_value('120')
+        is_expected.to contain_congress_config('DEFAULT/control_exchange').with_value('congress')
       end
     end
 
