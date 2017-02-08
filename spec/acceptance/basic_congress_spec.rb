@@ -26,37 +26,29 @@ describe 'basic congress' do
         require              => Class['rabbitmq'],
       }
       # Congress resources
-      case $::osfamily {
-        'RedHat': {
-          warning('Congress is not yet packaged on RedHat systems.')
-        }
-        'Debian': {
-          # TODO(zhongshengping): temporarily added this package
-          package { 'python-antlr3':
-            ensure => present,
-          }
-          class { '::congress':
-            default_transport_url => 'rabbit://congress:an_even_bigger_secret@127.0.0.1/',
-          }
-          class { '::congress::keystone::auth':
-            password => 'a_big_secret',
-          }
-          class { '::congress::db::mysql':
-            password => 'a_big_secret',
-          }
-          class { '::congress::db':
-            database_connection => 'mysql+pymysql://congress:a_big_secret@127.0.0.1/congress?charset=utf8',
-          }
-          class { '::congress::keystone::authtoken':
-            password => 'a_big_secret',
-          }
-          class { '::congress::server': }
-          class { '::congress::client': }
-        }
-        default: {
-          fail("Unsupported osfamily (${::osfamily})")
+      if $::osfamily == 'Debian' {
+        # TODO(zhongshengping): temporarily added this package
+        package { 'python-antlr3':
+          ensure => present,
         }
       }
+      class { '::congress':
+        default_transport_url => 'rabbit://congress:an_even_bigger_secret@127.0.0.1/',
+      }
+      class { '::congress::keystone::auth':
+        password => 'a_big_secret',
+      }
+      class { '::congress::db::mysql':
+        password => 'a_big_secret',
+      }
+      class { '::congress::db':
+        database_connection => 'mysql+pymysql://congress:a_big_secret@127.0.0.1/congress?charset=utf8',
+      }
+      class { '::congress::keystone::authtoken':
+        password => 'a_big_secret',
+      }
+      class { '::congress::server': }
+      class { '::congress::client': }
       EOS
 
 
@@ -65,11 +57,8 @@ describe 'basic congress' do
       apply_manifest(pp, :catch_changes => true)
     end
 
-    if os[:family].casecmp('Debian') == 0
-      describe port(1789) do
-        it { is_expected.to be_listening.with('tcp') }
-      end
+    describe port(1789) do
+      it { is_expected.to be_listening.with('tcp') }
     end
-
   end
 end
