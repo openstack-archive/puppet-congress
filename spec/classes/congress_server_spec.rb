@@ -60,7 +60,7 @@ describe 'congress::server' do
         when 'Debian'
           { :congress_service => 'congress-server' }
         when 'RedHat'
-          { :congress_service => 'openstack-congress' }
+          { :congress_service => 'openstack-congress-server' }
         end
       end
 

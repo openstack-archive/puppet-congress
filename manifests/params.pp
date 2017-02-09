@@ -15,7 +15,7 @@ class congress::params {
   case $::osfamily {
     'RedHat': {
       $package_name = 'openstack-congress'
-      $service_name = 'openstack-congress'
+      $service_name = 'openstack-congress-server'
     }
     'Debian': {
       $package_name = 'congress-server'
