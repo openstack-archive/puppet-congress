@@ -38,6 +38,8 @@ describe 'congress' do
       end
 
       it { is_expected.to contain_oslo__messaging__notifications('congress_config').with(:transport_url => '<SERVICE DEFAULT>') }
+      it { is_expected.to contain_oslo__messaging__notifications('congress_config').with(:topics => '<SERVICE DEFAULT>') }
+      it { is_expected.to contain_oslo__messaging__notifications('congress_config').with(:driver => '<SERVICE DEFAULT>') }
     end
 
     context 'with overridden parameters' do
@@ -123,13 +125,19 @@ describe 'congress' do
 
     context 'with notification_transport_url parameter' do
       let :params do
-        { :notification_transport_url => 'rabbit://user:pass@host:1234/virtualhost' }
+        { 
+          :notification_transport_url => 'rabbit://user:pass@host:1234/virtualhost',
+          :notification_topics        => 'openstack',
+          :notification_driver        => 'messagingv1',
+        }
       end
 
       it 'configures rabbit' do
         is_expected.to contain_oslo__messaging__notifications('congress_config').with(
           :transport_url => 'rabbit://user:pass@host:1234/virtualhost'
         )
+        is_expected.to contain_oslo__messaging__notifications('congress_config').with(:topics => 'openstack')
+        is_expected.to contain_oslo__messaging__notifications('congress_config').with(:driver => 'messagingv1')
       end
     end
 

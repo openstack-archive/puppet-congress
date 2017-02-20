@@ -29,6 +29,15 @@
 #   example rabbit url would be, rabbit://user:pass@host:port/virtual_host
 #   Defaults to $::os_service_default
 #
+# [*notification_driver*]
+#   (Optional) Driver or drivers to handle sending notifications.
+#   Value can be a string or a list.
+#   Defaults to $::os_service_default
+#
+# [*notification_topics*]
+#   (optional) AMQP topic used for OpenStack notifications
+#   Defaults to ::os_service_default
+#
 # [*rabbit_heartbeat_timeout_threshold*]
 #   (optional) Number of seconds after which the RabbitMQ broker is considered
 #   down if the heartbeat keepalive fails.  Any value >0 enables heartbeats.
@@ -206,6 +215,8 @@ class congress(
   $rpc_response_timeout               = $::os_service_default,
   $control_exchange                   = $::os_service_default,
   $notification_transport_url         = $::os_service_default,
+  $notification_driver                = $::os_service_default,
+  $notification_topics                = $::os_service_default,
   $rabbit_heartbeat_timeout_threshold = $::os_service_default,
   $rabbit_heartbeat_rate              = $::os_service_default,
   $rabbit_use_ssl                     = $::os_service_default,
@@ -325,5 +336,7 @@ deprecated. Please use congress::default_transport_url instead.")
 
   oslo::messaging::notifications { 'congress_config':
     transport_url => $notification_transport_url,
+    driver        => $notification_driver,
+    topics        => $notification_topics,
   }
 }
