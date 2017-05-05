@@ -32,6 +32,9 @@ describe 'basic congress' do
           ensure => present,
         }
       }
+      class { '::congress::logging':
+        debug => true,
+      }
       class { '::congress':
         default_transport_url => 'rabbit://congress:an_even_bigger_secret@127.0.0.1/',
       }
