@@ -85,7 +85,7 @@ describe 'congress::db' do
       end
 
       it 'install the proper backend package' do
-        is_expected.to contain_package('db_backend_package').with(
+        is_expected.to contain_package('python-pymysql').with(
           :ensure => 'present',
           :name   => 'python-pymysql',
           :tag    => 'openstack'
@@ -100,9 +100,6 @@ describe 'congress::db' do
         { :database_connection => 'mysql+pymysql://congress:congress@localhost/congress', }
       end
 
-      it 'install the proper backend package' do
-        is_expected.not_to contain_package('db_backend_package')
-      end
     end
   end
 
