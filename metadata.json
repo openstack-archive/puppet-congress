@@ -67,5 +67,5 @@
     ],
     "source": "git://github.com/openstack/puppet-congress.git",
     "summary": "Puppet module for OpenStack Congress",
-    "version": "11.2.0-dev"
+    "version": "11.2.0"
 }
