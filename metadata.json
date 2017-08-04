@@ -11,15 +11,15 @@
         },
         {
             "name": "openstack/openstacklib",
-            "version_requirement": ">=10.5.0 <11.0.0"
+            "version_requirement": ">=10.6.0 <11.0.0"
         },
         {
             "name": "openstack/oslo",
-            "version_requirement": ">=10.5.0 <11.0.0"
+            "version_requirement": ">=10.6.0 <11.0.0"
         },
         {
             "name": "openstack/keystone",
-            "version_requirement": ">=10.5.0 <11.0.0"
+            "version_requirement": ">=10.6.0 <11.0.0"
         }
     ],
     "description": "Installs and configures OpenStack Congress.",
@@ -67,5 +67,5 @@
     ],
     "source": "git://github.com/openstack/puppet-congress.git",
     "summary": "Puppet module for OpenStack Congress",
-    "version": "11.2.0"
+    "version": "11.3.0-dev"
 }
