@@ -23,7 +23,6 @@ describe 'congress' do
       )}
 
       it 'configures rabbit' do
-        is_expected.to contain_congress_config('DEFAULT/rpc_backend').with_value('rabbit')
         is_expected.to contain_congress_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
@@ -57,7 +56,6 @@ describe 'congress' do
       end
 
       it 'configures rabbit' do
-        is_expected.to contain_congress_config('DEFAULT/rpc_backend').with_value('rabbit')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_host').with_value('rabbit')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_password').with_value('password').with_secret(true)
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_port').with_value('5673')
@@ -245,39 +243,31 @@ describe 'congress' do
       end
     end
 
-    context 'with amqp rpc_backend' do
-      let :params do
-        {
-          :rpc_backend       => 'amqp'
-         }
-      end
+    context 'with amqp default parameters' do
 
-      context 'with default parameters' do
-        it 'configures amqp' do
-          is_expected.to contain_congress_config('oslo_messaging_amqp/server_request_prefix').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/broadcast_prefix').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/group_request_prefix').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/container_name').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/idle_timeout').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/trace').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_ca_file').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_cert_file').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_key_file').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_key_password').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/allow_insecure_clients').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_mechanisms').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_config_dir').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_config_name').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/username').with_value('<SERVICE DEFAULT>')
-          is_expected.to contain_congress_config('oslo_messaging_amqp/password').with_value('<SERVICE DEFAULT>')
-        end
+      it 'configures amqp' do
+        is_expected.to contain_congress_config('oslo_messaging_amqp/server_request_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/broadcast_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/group_request_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/container_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/idle_timeout').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/trace').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_ca_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_cert_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_key_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/ssl_key_password').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/allow_insecure_clients').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_mechanisms').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_config_dir').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/sasl_config_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/username').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_amqp/password').with_value('<SERVICE DEFAULT>')
       end
     end
 
     context 'with overriden amqp parameters' do
       let :params do
         {
-          :rpc_backend           => 'amqp',
           :amqp_idle_timeout     => '60',
           :amqp_trace            => true,
           :amqp_ssl_ca_file      => '/etc/ca.cert',
