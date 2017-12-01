@@ -8,7 +8,6 @@ class congress::params {
   $drivers             = ['congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver',
                           'congress.datasources.nova_driver.NovaDriver',
                           'congress.datasources.keystone_driver.KeystoneDriver',
-                          'congress.datasources.ceilometer_driver.CeilometerDriver',
                           'congress.datasources.cinder_driver.CinderDriver']
   $client_package_name = 'python-congressclient'
 
