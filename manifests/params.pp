@@ -10,6 +10,7 @@ class congress::params {
                           'congress.datasources.keystone_driver.KeystoneDriver',
                           'congress.datasources.cinder_driver.CinderDriver']
   $client_package_name = 'python-congressclient'
+  $group               = 'congress'
 
   case $::osfamily {
     'RedHat': {
