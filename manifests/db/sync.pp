@@ -27,6 +27,7 @@ class congress::db::sync(
       Anchor['congress::dbsync::begin']
     ],
     notify      => Anchor['congress::dbsync::end'],
+    tag         => 'openstack-db',
   }
 
 }

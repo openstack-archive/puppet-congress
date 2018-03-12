@@ -17,6 +17,7 @@ describe 'congress::db::sync' do
                          'Anchor[congress::config::end]',
                          'Anchor[congress::dbsync::begin]'],
         :notify      => 'Anchor[congress::dbsync::end]',
+        :tag         => 'openstack-db',
       )
     end
 
