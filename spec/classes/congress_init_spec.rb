@@ -267,7 +267,7 @@ describe 'congress' do
       end
     end
 
-    context 'with overriden amqp parameters' do
+    context 'with overridden amqp parameters' do
       let :params do
         {
           :amqp_idle_timeout     => '60',
