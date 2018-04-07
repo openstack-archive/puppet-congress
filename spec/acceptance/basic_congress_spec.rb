@@ -26,12 +26,6 @@ describe 'basic congress' do
         require              => Class['rabbitmq'],
       }
       # Congress resources
-      if $::osfamily == 'Debian' {
-        # TODO(zhongshengping): temporarily added this package
-        package { 'python-antlr3':
-          ensure => present,
-        }
-      }
       class { '::congress::logging':
         debug => true,
       }
