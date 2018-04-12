@@ -5,11 +5,17 @@
 class congress::params {
   include ::openstacklib::defaults
 
+  if ($::os_package_type == 'debian') {
+    $pyvers = '3'
+  } else {
+    $pyvers = ''
+  }
+
   $drivers             = ['congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver',
                           'congress.datasources.nova_driver.NovaDriver',
                           'congress.datasources.keystone_driver.KeystoneDriver',
                           'congress.datasources.cinder_driver.CinderDriver']
-  $client_package_name = 'python-congressclient'
+  $client_package_name = "python${pyvers}-congressclient"
   $group               = 'congress'
 
   case $::osfamily {

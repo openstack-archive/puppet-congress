@@ -12,7 +12,7 @@ describe 'congress::client' do
       it 'contains congressclient' do
           is_expected.to contain_package('python-congressclient').with(
               :ensure => 'present',
-              :name   => 'python-congressclient',
+              :name   => platform_params[:client_package_name],
           )
       end
     end
@@ -25,6 +25,19 @@ describe 'congress::client' do
     context "on #{os}" do
       let (:facts) do
         facts.merge!(OSDefaults.get_facts())
+      end
+
+      let(:platform_params) do
+        case facts[:osfamily]
+        when 'Debian'
+          if facts[:os_package_type] == 'debian'
+            { :client_package_name => 'python3-congressclient' }
+          else
+            { :client_package_name => 'python-congressclient' }
+          end
+        when 'RedHat'
+          { :client_package_name => 'python-congressclient' }
+        end
       end
 
       it_behaves_like 'congress::client'
