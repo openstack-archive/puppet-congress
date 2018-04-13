@@ -6,14 +6,14 @@ describe 'congress::client' do
 
     context 'with default parameters' do
       it 'contains congress::params' do
-          is_expected.to contain_class('congress::deps')
-          is_expected.to contain_class('congress::params')
+        is_expected.to contain_class('congress::deps')
+        is_expected.to contain_class('congress::params')
       end
       it 'contains congressclient' do
-          is_expected.to contain_package('python-congressclient').with(
-              :ensure => 'present',
-              :name   => platform_params[:client_package_name],
-          )
+        is_expected.to contain_package('python-congressclient').with(
+          :ensure => 'present',
+          :name   => platform_params[:client_package_name],
+        )
       end
     end
 
