@@ -13,6 +13,7 @@ describe 'congress::client' do
         is_expected.to contain_package('python-congressclient').with(
           :ensure => 'present',
           :name   => platform_params[:client_package_name],
+          :tag    => 'openstack',
         )
       end
     end
