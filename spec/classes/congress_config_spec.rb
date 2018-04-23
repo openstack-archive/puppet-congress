@@ -14,6 +14,8 @@ describe 'congress::config' do
       { :congress_config => config_hash }
     end
 
+    it { is_expected.to contain_class('congress::deps') }
+
     it 'configures arbitrary congress-config configurations' do
       is_expected.to contain_congress_config('DEFAULT/foo').with_value('fooValue')
       is_expected.to contain_congress_config('DEFAULT/bar').with_value('barValue')
