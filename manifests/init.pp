@@ -168,33 +168,6 @@
 #   (Optional) Run db sync on the node.
 #   Defaults to true
 #
-# === DEPRECATED PARAMETERS
-#
-# [*rabbit_host*]
-#   (Optional) IP or hostname of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_port*]
-#   (Optional) Port of the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_hosts*]
-#   (Optional) Array of host:port (used with HA queues).
-#   If defined, will remove rabbit_host & rabbit_port parameters from config
-#   Defaults to $::os_service_default
-#
-# [*rabbit_userid*]
-#   (Optional) User to connect to the rabbit server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_password*]
-#   (Required) Password to connect to the rabbit_server.
-#   Defaults to $::os_service_default
-#
-# [*rabbit_virtual_host*]
-#   (Optional) Virtual_host to use.
-#   Defaults to $::os_service_default
-#
 # [*package_name*]
 #   (Optional) Package name to install for congress.
 #   Defaults to $::congress::params::package_name
@@ -202,10 +175,6 @@
 # [*package_ensure*]
 #   (Optional) Ensure state for package.
 #   Defaults to present.
-#
-# [*rpc_backend*]
-#   (Optional) Use these options to configure the RabbitMQ message system.
-#   Defaults to 'rabbit'
 #
 # == Authors
 #
@@ -254,29 +223,10 @@ class congress(
   $sync_db                            = true,
   $package_name                       = $::congress::params::package_name,
   $package_ensure                     = 'present',
-  # DEPRECATED PARAMETERS
-  $rabbit_host                        = $::os_service_default,
-  $rabbit_port                        = $::os_service_default,
-  $rabbit_hosts                       = $::os_service_default,
-  $rabbit_virtual_host                = $::os_service_default,
-  $rabbit_userid                      = $::os_service_default,
-  $rabbit_password                    = $::os_service_default,
-  $rpc_backend                        = 'rabbit',
 ) inherits congress::params {
 
   include ::congress::deps
   include ::congress::logging
-
-  if !is_service_default($rabbit_host) or
-    !is_service_default($rabbit_hosts) or
-    !is_service_default($rabbit_password) or
-    !is_service_default($rabbit_port) or
-    !is_service_default($rabbit_userid) or
-    $rpc_backend or !is_service_default($rabbit_virtual_host) {
-    warning("congress::rabbit_host, congress::rabbit_hosts, congress::rabbit_password, \
-congress::rabbit_port, congress::rabbit_userid and congress::rabbit_virtual_host and \
-congress::rpc_backend are deprecated. Please use congress::default_transport_url instead.")
-  }
 
   package { 'congress-common':
     ensure => $package_ensure,
@@ -293,9 +243,6 @@ congress::rpc_backend are deprecated. Please use congress::default_transport_url
   }
 
   oslo::messaging::rabbit {'congress_config':
-    rabbit_password             => $rabbit_password,
-    rabbit_userid               => $rabbit_userid,
-    rabbit_virtual_host         => $rabbit_virtual_host,
     rabbit_use_ssl              => $rabbit_use_ssl,
     heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
     heartbeat_rate              => $rabbit_heartbeat_rate,
@@ -307,9 +254,6 @@ congress::rpc_backend are deprecated. Please use congress::default_transport_url
     kombu_ssl_certfile          => $kombu_ssl_certfile,
     kombu_ssl_keyfile           => $kombu_ssl_keyfile,
     kombu_ssl_version           => $kombu_ssl_version,
-    rabbit_hosts                => $rabbit_hosts,
-    rabbit_host                 => $rabbit_host,
-    rabbit_port                 => $rabbit_port,
     rabbit_ha_queues            => $rabbit_ha_queues,
   }
 
