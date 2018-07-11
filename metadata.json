@@ -36,9 +36,7 @@
         {
             "operatingsystem": "Fedora",
             "operatingsystemrelease": [
-                "21",
-                "22"
-            ]
+                "24"            ]
         },
         {
             "operatingsystem": "RedHat",
