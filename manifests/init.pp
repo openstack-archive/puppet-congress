@@ -226,7 +226,6 @@ class congress(
 ) inherits congress::params {
 
   include ::congress::deps
-  include ::congress::logging
 
   package { 'congress-common':
     ensure => $package_ensure,

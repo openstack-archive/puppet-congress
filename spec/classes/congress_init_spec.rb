@@ -9,9 +9,8 @@ describe 'congress' do
         {}
       end
 
-      it 'contains the logging class' do
+      it 'contains deps class' do
         is_expected.to contain_class('congress::deps')
-        is_expected.to contain_class('congress::logging')
       end
 
       it { is_expected.to contain_package('congress-common').with(
