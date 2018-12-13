@@ -5,7 +5,7 @@
 # === Parameters
 #
 # [*policies*]
-#   (optional) Set of policies to configure for congress
+#   (Optional) Set of policies to configure for congress
 #   Example :
 #     {
 #       'congress-context_is_admin' => {
@@ -20,7 +20,7 @@
 #   Defaults to empty hash.
 #
 # [*policy_path*]
-#   (optional) Path to the nova policy.json file
+#   (Optional) Path to the nova policy.json file
 #   Defaults to /etc/congress/policy.json
 #
 class congress::policy (

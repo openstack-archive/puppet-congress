@@ -4,7 +4,7 @@
 # == Parameters
 #
 # [*user*]
-#   (optional) User to run dbsync command.
+#   (Optional) User to run dbsync command.
 #   Defaults to 'congress'
 #
 class congress::db::sync(
