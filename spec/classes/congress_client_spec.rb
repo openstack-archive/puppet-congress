@@ -31,11 +31,7 @@ describe 'congress::client' do
       let(:platform_params) do
         case facts[:osfamily]
         when 'Debian'
-          if facts[:os_package_type] == 'debian'
-            { :client_package_name => 'python3-congressclient' }
-          else
-            { :client_package_name => 'python-congressclient' }
-          end
+          { :client_package_name => 'python3-congressclient' }
         when 'RedHat'
           { :client_package_name => 'python-congressclient' }
         end
