@@ -30,8 +30,8 @@ class congress::config (
 
   include ::congress::deps
 
-  validate_hash($congress_config)
-  validate_hash($congress_api_paste_ini)
+  validate_legacy(Hash, 'validate_hash', $congress_config)
+  validate_legacy(Hash, 'validate_hash', $congress_api_paste_ini)
 
   create_resources('congress_config', $congress_config)
   create_resources('congress_api_paste_ini', $congress_api_paste_ini)

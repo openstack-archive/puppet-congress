@@ -31,7 +31,7 @@ class congress::policy (
   include ::congress::deps
   include ::congress::params
 
-  validate_hash($policies)
+  validate_legacy(Hash, 'validate_hash', $policies)
 
   Openstacklib::Policy::Base {
     file_path  => $policy_path,

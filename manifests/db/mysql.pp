@@ -45,7 +45,7 @@ class congress::db::mysql(
 
   include ::congress::deps
 
-  validate_string($password)
+  validate_legacy(String, 'validate_string', $password)
 
   ::openstacklib::db::mysql { 'congress':
     user          => $user,
