@@ -33,7 +33,7 @@ Setup
 
 **What the congress module affects**
 
-* [Congress](https://wiki.openstack.org/wiki/Congress), the policy service for OpenStack.
+* [Congress](https://docs.openstack.org/congress/latest/), the policy service for OpenStack.
 
 ### Installing congress
 
