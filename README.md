@@ -93,6 +93,6 @@ Release Notes
 Repository
 ----------
 
-* https://git.openstack.org/cgit/openstack/puppet-congress
+* https://opendev.org/openstack/puppet-congress
 
 
