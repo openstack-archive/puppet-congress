@@ -16,6 +16,7 @@ describe 'congress::client' do
           :tag    => 'openstack',
         )
       end
+      it { is_expected.to contain_class('openstacklib::openstackclient') }
     end
 
   end

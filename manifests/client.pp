@@ -19,4 +19,6 @@ class congress::client (
     tag    => 'openstack',
   }
 
+  include '::openstacklib::openstackclient'
+
 }
