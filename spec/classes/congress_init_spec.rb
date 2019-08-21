@@ -24,7 +24,7 @@ describe 'congress' do
         is_expected.to contain_congress_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_rate').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/kombu_compression').with_value('<SERVICE DEFAULT>')
       end
 
@@ -39,6 +39,7 @@ describe 'congress' do
           :rabbit_ha_queues                   => true,
           :rabbit_heartbeat_timeout_threshold => '60',
           :rabbit_heartbeat_rate              => '10',
+          :rabbit_heartbeat_in_pthread        => true,
           :kombu_compression                  => 'gzip',
         }
       end
@@ -47,6 +48,7 @@ describe 'congress' do
         is_expected.to contain_congress_config('oslo_messaging_rabbit/rabbit_ha_queues').with_value(true)
         is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('60')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_rate').with_value('10')
+        is_expected.to contain_congress_config('oslo_messaging_rabbit/heartbeat_in_pthread').with_value(true)
         is_expected.to contain_congress_config('oslo_messaging_rabbit/kombu_compression').with_value('gzip')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/kombu_reconnect_delay').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_congress_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE DEFAULT>')
