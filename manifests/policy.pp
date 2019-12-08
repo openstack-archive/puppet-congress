@@ -28,8 +28,8 @@ class congress::policy (
   $policy_path = '/etc/congress/policy.json',
 ) {
 
-  include ::congress::deps
-  include ::congress::params
+  include congress::deps
+  include congress::params
 
   validate_legacy(Hash, 'validate_hash', $policies)
 

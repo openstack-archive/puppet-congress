@@ -236,7 +236,7 @@ class congress(
   $package_ensure                     = 'present',
 ) inherits congress::params {
 
-  include ::congress::deps
+  include congress::deps
 
   package { 'congress-common':
     ensure => $package_ensure,
@@ -249,7 +249,7 @@ class congress(
   }
 
   if $sync_db {
-    include ::congress::db::sync
+    include congress::db::sync
   }
 
   oslo::messaging::rabbit {'congress_config':

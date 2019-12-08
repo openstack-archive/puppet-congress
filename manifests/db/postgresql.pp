@@ -32,7 +32,7 @@ class congress::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   ::openstacklib::db::postgresql { 'congress':
     password_hash => postgresql_password($user, $password),

@@ -202,7 +202,7 @@ class congress::keystone::authtoken(
   $service_token_roles_required   = $::os_service_default,
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   keystone::resource::authtoken { 'congress_config':
     username                       => $username,

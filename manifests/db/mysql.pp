@@ -43,7 +43,7 @@ class congress::db::mysql(
   $allowed_hosts = undef
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   validate_legacy(String, 'validate_string', $password)
 

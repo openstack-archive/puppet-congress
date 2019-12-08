@@ -6,11 +6,11 @@ describe 'basic congress' do
 
     it 'should work with no errors' do
       pp= <<-EOS
-      include ::openstack_integration
-      include ::openstack_integration::repos
-      include ::openstack_integration::rabbitmq
-      include ::openstack_integration::mysql
-      include ::openstack_integration::keystone
+      include openstack_integration
+      include openstack_integration::repos
+      include openstack_integration::rabbitmq
+      include openstack_integration::mysql
+      include openstack_integration::keystone
 
       rabbitmq_user { 'congress':
         admin    => true,
@@ -26,26 +26,26 @@ describe 'basic congress' do
         require              => Class['rabbitmq'],
       }
       # Congress resources
-      class { '::congress::logging':
+      class { 'congress::logging':
         debug => true,
       }
-      class { '::congress':
+      class { 'congress':
         default_transport_url => 'rabbit://congress:an_even_bigger_secret@127.0.0.1/',
       }
-      class { '::congress::keystone::auth':
+      class { 'congress::keystone::auth':
         password => 'a_big_secret',
       }
-      class { '::congress::db::mysql':
+      class { 'congress::db::mysql':
         password => 'a_big_secret',
       }
-      class { '::congress::db':
+      class { 'congress::db':
         database_connection => 'mysql+pymysql://congress:a_big_secret@127.0.0.1/congress?charset=utf8',
       }
-      class { '::congress::keystone::authtoken':
+      class { 'congress::keystone::authtoken':
         password => 'a_big_secret',
       }
-      class { '::congress::server': }
-      class { '::congress::client': }
+      class { 'congress::server': }
+      class { 'congress::client': }
       EOS
 
 

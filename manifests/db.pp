@@ -62,7 +62,7 @@ class congress::db (
   $database_idle_timeout            = undef,
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   validate_legacy(Oslo::Dbconn, 'validate_re', $database_connection,
     ['^(sqlite|mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?'])

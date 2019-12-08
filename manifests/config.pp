@@ -28,7 +28,7 @@ class congress::config (
   $congress_api_paste_ini = {},
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   validate_legacy(Hash, 'validate_hash', $congress_config)
   validate_legacy(Hash, 'validate_hash', $congress_api_paste_ini)

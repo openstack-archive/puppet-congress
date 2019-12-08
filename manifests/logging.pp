@@ -123,7 +123,7 @@ class congress::logging(
   $log_date_format               = $::os_service_default,
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   oslo::log { 'congress_config':
     use_stderr                    => $use_stderr,

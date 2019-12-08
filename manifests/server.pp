@@ -30,12 +30,12 @@ class congress::server(
   $bind_port      = $::os_service_default,
 ) {
 
-  include ::congress::deps
-  include ::congress::params
-  include ::congress::policy
+  include congress::deps
+  include congress::params
+  include congress::policy
 
   if $auth_strategy == 'keystone' {
-    include ::congress::keystone::authtoken
+    include congress::keystone::authtoken
   }
 
   congress_config {

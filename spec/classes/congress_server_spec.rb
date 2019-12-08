@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'congress::server' do
 
   let :pre_condition do
-    "class { '::congress::keystone::authtoken':
+    "class { 'congress::keystone::authtoken':
        password =>'foo',
      }
      class {'::congress': }"

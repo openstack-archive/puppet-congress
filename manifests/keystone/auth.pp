@@ -78,7 +78,7 @@ class congress::keystone::auth (
   $internal_url        = 'http://127.0.0.1:1789',
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   if $configure_user_role {
     Keystone_user_role["${auth_name}@${tenant}"] ~> Anchor['congress::service::end']

@@ -11,7 +11,7 @@ class congress::db::sync(
   $user = 'congress',
 ) {
 
-  include ::congress::deps
+  include congress::deps
 
   exec { 'congress-db-sync':
     command     => 'congress-db-manage --config-file /etc/congress/congress.conf upgrade head',
