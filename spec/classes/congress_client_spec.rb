@@ -34,7 +34,15 @@ describe 'congress::client' do
         when 'Debian'
           { :client_package_name => 'python3-congressclient' }
         when 'RedHat'
-          { :client_package_name => 'python-congressclient' }
+          if facts[:operatingsystem] == 'Fedora'
+            { :client_package_name => 'python3-congressclient' }
+          else
+            if facts[:operatingsystemmajrelease] > '7'
+              { :client_package_name => 'python3-congressclient' }
+            else
+              { :client_package_name => 'python-congressclient' }
+            end
+          end
         end
       end
 
