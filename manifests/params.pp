@@ -6,10 +6,6 @@ class congress::params {
   include openstacklib::defaults
   $pyvers = $::openstacklib::defaults::pyvers
 
-  $drivers             = ['congress.datasources.neutronv2_driver.NeutronV2Driver,congress.datasources.glancev2_driver.GlanceV2Driver',
-                          'congress.datasources.nova_driver.NovaDriver',
-                          'congress.datasources.keystone_driver.KeystoneDriver',
-                          'congress.datasources.cinder_driver.CinderDriver']
   $client_package_name = "python${pyvers}-congressclient"
   $group               = 'congress'
 

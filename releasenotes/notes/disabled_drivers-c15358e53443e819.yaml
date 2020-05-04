@@ -1,0 +1,9 @@
+---
+features:
+  - |
+    The ``congress::disabled_drivers`` parameter is added to configure a list
+    of disabled drivers.
+deprecations:
+  - |
+    The ``congress::drivers`` parameter has been deprecated and will be removed
+    in a future release. Use ``congress::disabled_drivers`` instead.
