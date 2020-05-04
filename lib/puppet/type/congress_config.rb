@@ -46,8 +46,8 @@ Puppet::Type.newtype(:congress_config) do
     defaultto('<SERVICE DEFAULT>')
   end
 
-  autorequire(:package) do
-    'congress'
+  autorequire(:anchor) do
+    ['congress::install::end']
   end
 
 end

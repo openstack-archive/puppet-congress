@@ -45,8 +45,8 @@ Puppet::Type.newtype(:congress_api_paste_ini) do
     defaultto('<SERVICE DEFAULT>')
   end
 
-  autorequire(:package) do
-    'congress-server'
+  autorequire(:anchor) do
+    ['congress::install::end']
   end
 
 end
