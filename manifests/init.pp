@@ -170,9 +170,9 @@
 #   (Optional) Password for message broker authentication
 #   Defaults to $::os_service_default
 #
-# [*drivers*]
-#   (optional) Comma delimited list of drivers for congress.
-#   Defaults to '$::congress::params::drivers'
+# [*disabled_drivers*]
+#   (optional) Comma delimited list of disabled_drivers for congress.
+#   Defaults to $::os_service_default
 #
 # [*sync_db*]
 #   (Optional) Run db sync on the node.
@@ -185,6 +185,12 @@
 # [*package_ensure*]
 #   (Optional) Ensure state for package.
 #   Defaults to present.
+#
+# DEPRECATED PARAMETERS
+#
+# [*drivers*]
+#   (optional) Comma delimited list of drivers for congress.
+#   Defaults to undef
 #
 # == Authors
 #
@@ -230,10 +236,12 @@ class congress(
   $amqp_sasl_config_name              = $::os_service_default,
   $amqp_username                      = $::os_service_default,
   $amqp_password                      = $::os_service_default,
-  $drivers                            = $::congress::params::drivers,
+  $disabled_drivers                   = $::os_service_default,
   $sync_db                            = true,
   $package_name                       = $::congress::params::package_name,
   $package_ensure                     = 'present',
+  # DEPRECATED PARAMETERS
+  $drivers                            = undef
 ) inherits congress::params {
 
   include congress::deps
@@ -244,8 +252,16 @@ class congress(
     tag    => ['openstack', 'congress-package'],
   }
 
+  if $drivers != undef {
+    warning('The congress::drivers parameter is deprecated and will be removed \
+in a future release. Use congress::disabled_drivers instead.')
+    congress_config {
+      'DEFAULT/drivers' : value => join(any2array($drivers), ',');
+    }
+  }
+
   congress_config {
-    'DEFAULT/drivers' : value => join(any2array($drivers), ',');
+    'DEFAULT/disabled_drivers' : value => join(any2array($disabled_drivers), ',');
   }
 
   if $sync_db {
