@@ -7,7 +7,7 @@ describe 'congress::db::mysql' do
   end
 
   let :required_params do
-    { :password => 'fooboozoo_default_password', }
+    { :password => 'congresspass', }
   end
 
   shared_examples_for 'congress-db-mysql' do
@@ -18,7 +18,7 @@ describe 'congress::db::mysql' do
 
       it { is_expected.to contain_openstacklib__db__mysql('congress').with(
         :user           => 'congress',
-        :password_hash  => '*3DDF34A86854A312A8E2C65B506E21C91800D206',
+        :password       => 'congresspass',
         :dbname         => 'congress',
         :host           => '127.0.0.1',
         :charset        => 'utf8',
@@ -33,7 +33,7 @@ describe 'congress::db::mysql' do
 
       it { is_expected.to contain_openstacklib__db__mysql('congress').with(
         :user           => 'congress',
-        :password_hash  => '*3DDF34A86854A312A8E2C65B506E21C91800D206',
+        :password       => 'congresspass',
         :dbname         => 'congress',
         :host           => '127.0.0.1',
         :charset        => 'utf8',
@@ -49,7 +49,7 @@ describe 'congress::db::mysql' do
 
       it { is_expected.to contain_openstacklib__db__mysql('congress').with(
         :user           => 'congress',
-        :password_hash  => '*3DDF34A86854A312A8E2C65B506E21C91800D206',
+        :password       => 'congresspass',
         :dbname         => 'congress',
         :host           => '127.0.0.1',
         :charset        => 'utf8',

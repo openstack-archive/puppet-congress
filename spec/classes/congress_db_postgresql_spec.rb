@@ -7,7 +7,7 @@ describe 'congress::db::postgresql' do
   end
 
   let :required_params do
-    { :password => 'pw' }
+    { :password => 'congresspass' }
   end
 
   shared_examples_for 'congress-db-postgresql' do
@@ -16,9 +16,12 @@ describe 'congress::db::postgresql' do
         required_params
       end
 
-      it { is_expected.to contain_postgresql__server__db('congress').with(
-        :user     => 'congress',
-        :password => 'md5a2f665ba4d66aae91c2a86eedd8e564e'
+      it { is_expected.to contain_openstacklib__db__postgresql('congress').with(
+        :user       => 'congress',
+        :password   => 'congresspass',
+        :dbname     => 'congress',
+        :encoding   => nil,
+        :privileges => 'ALL',
       )}
     end
   end

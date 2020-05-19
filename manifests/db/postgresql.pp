@@ -35,11 +35,11 @@ class congress::db::postgresql(
   include congress::deps
 
   ::openstacklib::db::postgresql { 'congress':
-    password_hash => postgresql_password($user, $password),
-    dbname        => $dbname,
-    user          => $user,
-    encoding      => $encoding,
-    privileges    => $privileges,
+    password   => $password,
+    dbname     => $dbname,
+    user       => $user,
+    encoding   => $encoding,
+    privileges => $privileges,
   }
 
   Anchor['congress::db::begin']
