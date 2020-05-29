@@ -1,6 +1,0 @@
----
-upgrade:
-  - |
-    The deprecated parameters congress::rabbit_host, congress::rabbit_hosts, congress::rabbit_password,
-    congress::rabbit_port, congress::rabbit_userid, congress::rabbit_virtual_host and congress::rpc_backend 
-    is removed. Please use congress::default_transport_url instead.

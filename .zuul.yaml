@@ -1,8 +1,0 @@
-- project:
-    templates:
-      - puppet-openstack-check-jobs
-      - puppet-openstack-module-unit-jobs
-      # TODO(aschultz): revert this once we have psycopg2 > 2.7 in centos
-      # https://review.opendev.org/#/c/629691/
-      #- puppet-openstack-beaker-jobs
-      - release-notes-jobs-python3

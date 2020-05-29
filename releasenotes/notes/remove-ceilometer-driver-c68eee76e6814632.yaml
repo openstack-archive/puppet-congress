@@ -1,5 +1,0 @@
----
-upgrade:
-  - |
-    Removes the ceilometer_driver from the datasources as it was removed by
-    congress during the Queens cycle and causes service failures if referenced.
